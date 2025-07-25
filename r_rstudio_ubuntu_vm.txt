@@ -1,0 +1,99 @@
+# r_rstudio_ubuntu_vm.txt
+
+##############################
+# 下載並安裝 VirtualBox
+##############################
+https://www.virtualbox.org/
+
+##############################
+# 下載並安裝 VirtualBox Extension Pack
+##############################
+https://www.virtualbox.org/ 
+
+##############################
+# Ubuntu下載與安裝
+##############################
+https://ubuntu.com/download/desktop 
+
+##############################
+# 安裝中文輸入法
+##############################
+
+# 注音輸入法
+sudo apt-get install ibus-zhuyin
+
+# 速成輸入法
+sudo apt-get install ibus-table-quick 
+
+# 重新啟動輸入法
+ibus restart
+
+# 選取速成,注音
+Settings \ Keyboard \ Input Sources \ + Add Input Source \ Other \
+[1] Chinese (Quick3)
+[2] Chinese (Zhuyin)
+
+##############################
+# 安裝 Open Java
+##############################
+sudo apt-get install default-jre
+sudo apt-get install default-jdk
+
+# 顯示 Java 安裝版本
+java -version
+
+##############################
+# 安裝 R
+##############################
+
+# 更新安裝套件的來源庫
+sudo apt-get update
+
+# 安裝2個 helper 套件
+sudo apt install software-properties-common dirmngr
+
+# 新增簽章金鑰 (by Michael Rutter)
+# To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc 
+# Fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+
+# 新增 CRAN 來源庫
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+
+# 安裝 R 等核心套件
+sudo apt install r-base r-base-core r-recommended r-base-dev
+
+# 開啟R
+R
+
+# 開啟 R 進行 Java 組態管理
+sudo -i R CMD javareconf
+
+# 安裝 rJava 等套件
+sudo -i R
+install.packages(c("rJava", "ggplot2", "dplyr", "shiny"))
+
+# 基礎套件安裝目錄
+.Library
+
+# 套件安裝目錄
+.libPaths()
+
+##############################
+# 安裝 RStudio
+##############################
+
+# 切換至 Downloads 資料夾
+cd Downloads
+
+# 安裝相依套件
+sudo apt install libclang-dev libpq5 libssl-dev
+
+# 下載 RStudio
+wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2025.05.1-513-amd64.deb
+
+# 安裝 RStudio
+sudo dpkg -i rstudio-2025.05.1-513-amd64.deb
+
+# 開啟 RStudio
+rstudio
