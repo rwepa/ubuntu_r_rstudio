@@ -1,49 +1,53 @@
-# r_rstudio_ubuntu_vm.txt
+# virtualbox_ubuntu_r_rstudio.txt
 
 ##############################
-# 下載並安裝 VirtualBox
+# 1.VirtualBox 下載與安裝
 ##############################
+
+# 步驟1 下載並安裝 VirtualBox
 https://www.virtualbox.org/
 
-##############################
-# 下載並安裝 VirtualBox Extension Pack
-##############################
+# 步驟2 下載並安裝 VirtualBox Extension Pack
 https://www.virtualbox.org/ 
 
 ##############################
-# Ubuntu下載與安裝
+# 2.Ubuntu下載與安裝
 ##############################
+
 https://ubuntu.com/download/desktop 
 
-##############################
-# 安裝中文輸入法
-##############################
+# 終端機安裝 Google Chrome
+cd Downloads/
+ls -al
+sudo dpkg -i google-chrome-stable_current_amd64.deb
 
+# 安裝中文輸入法
 # 注音輸入法
 sudo apt-get install ibus-zhuyin
 
 # 速成輸入法
 sudo apt-get install ibus-table-quick 
 
-# 重新啟動輸入法
-ibus restart
+# 重新啟動電腦
+sudo reboot
 
-# 選取速成,注音
+# 選取輸入法
 Settings \ Keyboard \ Input Sources \ + Add Input Source \ Other \
 [1] Chinese (Quick3)
 [2] Chinese (Zhuyin)
 
-##############################
 # 安裝 Open Java
-##############################
 sudo apt-get install default-jre
 sudo apt-get install default-jdk
 
 # 顯示 Java 安裝版本
 java -version
 
+# VirtualBox 設定
+# refer to materials
+
 ##############################
-# 安裝 R
+# 3.Ubuntu + R 安裝
 ##############################
 
 # 更新安裝套件的來源庫
@@ -66,6 +70,13 @@ sudo apt install r-base r-base-core r-recommended r-base-dev
 # 開啟R
 R
 
+# iris散佈圖矩陣
+pairs(iris[-5], col=iris$Species, pch=16)
+
+# 離開R
+q()
+
+# Java 組態管理
 # 開啟 R 進行 Java 組態管理
 sudo -i R CMD javareconf
 
@@ -73,6 +84,7 @@ sudo -i R CMD javareconf
 sudo -i R
 install.packages(c("rJava", "ggplot2", "dplyr", "shiny"))
 
+# 套件安裝目錄
 # 基礎套件安裝目錄
 .Library
 
@@ -80,16 +92,14 @@ install.packages(c("rJava", "ggplot2", "dplyr", "shiny"))
 .libPaths()
 
 ##############################
-# 安裝 RStudio
+# 4.Ubuntu + RStudio 安裝
 ##############################
-
-# 切換至 Downloads 資料夾
-cd Downloads
 
 # 安裝相依套件
 sudo apt install libclang-dev libpq5 libssl-dev
 
 # 下載 RStudio
+cd Downloads
 wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2025.05.1-513-amd64.deb
 
 # 安裝 RStudio
@@ -97,3 +107,15 @@ sudo dpkg -i rstudio-2025.05.1-513-amd64.deb
 
 # 開啟 RStudio
 rstudio
+
+# ggplot2圖形文法繪圖
+library(ggplot2)
+ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+   geom_line(aes(color=Species)) +   
+   facet_wrap(~Species, ncol=1)
+   
+##############################
+# 5.結論
+##############################
+Big Data --> Ubuntu --> R --> RStudio
+# end
